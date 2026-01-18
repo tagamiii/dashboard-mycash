@@ -1,59 +1,66 @@
-# mycash+ — Documentação
+# mycash+ — Documentação do Projeto
 
-## Progresso
-- [x] PROMPT 0: Análise
-- [x] PROMPT 1: Estrutura Base
-- [ ] PROMPT 2: Layout Shell (Sidebar + Header)
-- [ ] PROMPT 3: Dashboard - Visão Geral
-- [ ] PROMPT 4: Tela de Cartões
-- [ ] PROMPT 5: Tela de Transações
-- [ ] PROMPT 6: Tela de Perfil e Ajustes Finais
+## 📋 Visão Geral
+Sistema de dashboard financeiro pessoal focado em mobile-first, estética premium e gerenciamento de estado em memória (sessão).
+
+## ⚠️ Regras Críticas
+1. **Armazenamento**: PROIBIDO uso de localStorage/sessionStorage. Estado apenas em memória (React Context).
+2. **Responsividade**: Mobile-First. Breakpoints apenas expandem o layout.
+   - Mobile: <1024px (Header Mobile + Drawer)
+   - Desktop: ≥1024px (Sidebar Lateral)
+3. **Estilo**: TailwindCSS + Variáveis do Figma. Sem estilos ad-hoc.
+4. **Navegação**: Single Page Application (SPA) sem reload.
+
+## 🗺️ Roadmap de Implementação
+
+### Fase 1: Fundação 🏗️
+- [x] **PROMPT 1: Estrutura Base e Configuração**
+  - [x] Arquitetura de pastas (domain-driven: components, contexts, hooks, types, utils)
+  - [x] Configuração Tailwind com tokens Figma (cores, fontes, espaçamentos)
+  - [x] Definição de Tipos TypeScript (Transaction, Goal, CreditCard, BankAccount, FamilyMember)
+  - [x] Configuração de Rotas (React Router)
+
+### Fase 2: Layout e Navegação 🧭
+- [ ] **PROMPT 2: Layout Desktop (Sidebar)**
+  - Sidebar expansível/colapsável, Tooltips, interação suave.
+- [ ] **PROMPT 3: Layout Mobile (Header)**
+  - Header fixo, Avatar trigger, Menu Dropdown animado.
+
+### Fase 3: Core Logic 🧠
+- [ ] **PROMPT 4: Context Global (State)**
+  - `FinanceProvider`: CRUDs em memória.
+  - Filtros Globais: `member`, `dateRange`, `type`, `search`.
+  - Hooks derivados: `calculateTotalBalance`, `getFilteredTransactions`, etc.
+
+### Fase 4: Dashboard Widgets 📊
+- [ ] **PROMPT 5: Cards de Resumo** (Saldo Total com destaque, Receitas, Despesas)
+- [ ] **PROMPT 6: Header com Controles** (Busca real-time, Filtro Popover, DatePicker, Seletor Membros)
+- [ ] **PROMPT 7: Carrossel de Categorias** (Donut Charts scrolláveis)
+- [ ] **PROMPT 8: Gráfico de Fluxo** (Area Chart: Receitas vs Despesas)
+- [ ] **PROMPT 9: Widget Cartões** (Visualização de limite e fatura)
+- [ ] **PROMPT 10: Widget Próximas Despesas** (Contas a pagar cronológicas)
+- [ ] **PROMPT 11: Tabela de Transações Dashboard** (Extrato resumido, paginação, filtros locais)
+
+### Fase 5: Modais e Formulários 📝
+- [ ] **PROMPT 12: Modal Nova Transação** (Receita/Despesa, Validações, Parcelamento)
+- [ ] **PROMPT 13: Modal Adicionar Membro** (Avatar, Função, Renda)
+- [ ] **PROMPT 14: Modal Conta/Cartão** (Cadastro de bancos e cartões)
+- [ ] **PROMPT 15: Modal Detalhes do Cartão** (Fatura detalhada e despesas vinculadas)
+- [ ] **PROMPT 16: Modal Filtros Mobile** (UX otimizada para touch)
+
+### Fase 6: Views Detalhadas 📱
+- [ ] **PROMPT 17: View Cartões Completa** (Grid responsivo, detalhes avançados)
+- [ ] **PROMPT 18: View Transações Completa** (Busca avançada, Exportação, Ordenação)
+- [ ] **PROMPT 19: View Perfil (Informações)** (Gestão de membros e dados pessoais)
+- [ ] **PROMPT 20: View Perfil (Configurações)** (Preferências, Categorias, Notificações)
+
+### Fase 7: Polimento e Qualidade ✨
+- [ ] **PROMPT 21: Animações Globais** (Micro-interações, Framer Motion/CSS Transitions)
+- [ ] **PROMPT 22: Utilitários e Formatadores** (Moeda BRL, Datas, Validadores)
+- [ ] **PROMPT 23: Revisão de Responsividade** (Ajuste fino de breakpoints 375px -> 1920px)
+- [ ] **PROMPT 24: Testes e QA Final** (Validação de fluxos, Edge cases, Acessibilidade)
 
 ---
-
-## PROMPT 0: Análise e Planejamento Inicial
-Status: ✅ | Data: 18/01 | Build: N/A
-
-### Análise do Figma
-**Componentes Visuais Identificados:**
-- Dashboard Home: Resumo de carteira, Entradas/Saídas, Gráficos.
-- Cartões: Lista de cartões (Nu, Inter, Picpay).
-- Navegação: Sidebar (Desktop) e Navbar/Drawer (Mobile).
-
-**Tokens e Variáveis (Typography Identificada):**
-- Heading: X-Small (20px), Medium (28px)
-- Label: Large (18px), Medium (16px), Small (14px), X-Small (12px)
-- Paragraph: Large (18px), Medium (16px), Small (14px), X-Small (12px)
-- Font Family: Inter
-
-**Arquitetura Proposta:**
-- `src/components/layout/`: Shell, Sidebar, Header.
-- `src/components/ui/`: Primitivas (Button, Card, Input).
-- `src/pages/`: Dashboard, Cards, Transactions.
-- `src/hooks/`: Lógica de negócio.
-
----
-
-## PROMPT 1: Estrutura Base e Temas
-Status: ✅ | Data: 18/01 | Build: ✅ (2 tentativas)
-
-### Implementado
-- **Router**: Configurado com React Router Dom (`/`, `/cards`).
-- **MainLayout**: Shell responsivo (com preparação para mobile/desktop).
-- **Tipografia**: Fonte Inter configurada via Google Fonts.
-- **Estrutura de Pastas**: `components/{layout,ui,domain}`, `pages`, `hooks`.
-- **Pages**: Dashboad e Cards criados (placeholders).
-
-### Tokens e Estilos
-- Fonte Global: `Inter`.
-- Cores de fundo: `bg-gray-50` (Página), `bg-white` (Cards).
-- Grid System: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` (Responsivo).
-
-### Build Logs
-- Falha na tentativa 1: Erro de import type no TypeScript (`TS1484`).
-- Sucesso na tentativa 2: Build limpo.
-
-### Checklist Mental
-- [x] Layout Base Mobile-First
-- [x] Reset CSS e Fontes
-- [x] Width 100% no container principal
+## ℹ️ Status do Projeto
+- **Análise Inicial**: ✅ Concluída
+- **Implementação**: ⏳ Aguardando início da Fase 1
